@@ -107,7 +107,6 @@ const resetPassword = asyncHandler(async(req, res) => {
     const { password, token } = req.body
     if ( !password || !token ) throw new Error("Missing inputs")
     const passwordResetToken = crypto.createHash('sha256').update(token).digest('hex')
-    console.log(passwordResetToken)
     const user = await User.findOne({ passwordResetToken, passwordResetExpired: { $gt: Date.now() }})
     if ( !user ) throw new Error('Invalid reset token')
     user.password = password
@@ -121,6 +120,46 @@ const resetPassword = asyncHandler(async(req, res) => {
     })
 })
 
+const getUsers = asyncHandler(async(req, res) => {
+    const response = await User.find()
+    return res.status(200).json({
+        success: response ? true : false,
+        users: response
+    })
+})
+
+const deleteUser = asyncHandler(async(req, res) => {
+    const { _id } = req.query
+    if ( !_id) throw new Error("Missing input")
+    const response = await User.findByIdAndDelete(_id)
+    return res.status(200).json({
+        success: response ? true : false,
+        mes: response ? `User with email ${response.email} deleted` : 'No user delete'
+    })
+})
+
+const updateUser = asyncHandler(async(req, res) => {
+    const { _id } = req.user
+    if ( !_id || Object.keys(req.body).length === 0 ) throw new Error("Missing input")
+    console.log(1)
+    const response = await User.findByIdAndUpdate(_id, req.body, {new: true}).select('-password -role -refreshToken')
+    return res.status(200).json({
+        success: response ? true : false,
+        updatedUser: response ? response : "Something went wrong"
+    })
+})
+
+const updateUserByAdmin = asyncHandler(async(req, res) => {
+    const { uid } = req.params
+    if (Object.keys(req.body).length === 0) throw new Error('Missing inputs')
+    const response = await User.findByIdAndUpdate(uid, req.body, { new: true }).select('-password -role -refreshToken')
+    console.log(response)
+    return res.status(200).json({
+        success: response ? true : false,
+        updatedUser: response ? response : 'Some thing went wrong'
+    })
+})
+
 module.exports = {
     register,
     login,
@@ -128,5 +167,9 @@ module.exports = {
     refreshAccessToken,
     logout,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    getUsers,
+    deleteUser,
+    updateUser,
+    updateUserByAdmin
 }

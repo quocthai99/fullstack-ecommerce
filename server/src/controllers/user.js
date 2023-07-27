@@ -141,7 +141,6 @@ const deleteUser = asyncHandler(async(req, res) => {
 const updateUser = asyncHandler(async(req, res) => {
     const { _id } = req.user
     if ( !_id || Object.keys(req.body).length === 0 ) throw new Error("Missing input")
-    console.log(1)
     const response = await User.findByIdAndUpdate(_id, req.body, {new: true}).select('-password -role -refreshToken')
     return res.status(200).json({
         success: response ? true : false,
@@ -153,7 +152,6 @@ const updateUserByAdmin = asyncHandler(async(req, res) => {
     const { uid } = req.params
     if (Object.keys(req.body).length === 0) throw new Error('Missing inputs')
     const response = await User.findByIdAndUpdate(uid, req.body, { new: true }).select('-password -role -refreshToken')
-    console.log(response)
     return res.status(200).json({
         success: response ? true : false,
         updatedUser: response ? response : 'Some thing went wrong'

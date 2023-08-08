@@ -13,9 +13,9 @@ const createProduct = asyncHandler(async(req, res) => {
 })
 
 const getProduct = asyncHandler(async(req, res) => {
-    const { uid } = req.params
-    if ( !uid ) throw new Error("Missing input")
-    const product = await Product.findById(uid)
+    const { pid } = req.params
+    if ( !pid ) throw new Error("Missing input")
+    const product = await Product.findById(pid)
     return res.status(200).json({
         success: product ? true : false,
         productData: product ? product : 'cannot get product'
@@ -116,11 +116,23 @@ const ratings = asyncHandler(async(req, res) => {
     })
 })
 
+const uploadImagesProduct = asyncHandler(async(req, res) => {
+    const { pid } = req.params
+    if(!req.files) throw new Error('Missing inputs')
+    const response = await Product.findByIdAndUpdate(pid, { $push: {images: { $each: req.files.map(el => el.path) }}}, {new: true})
+
+    return res.status(200).json({
+        success: response ? true : false,
+        updatedProduct: response ? response : 'Cannot upload images product'
+    })
+})
+
 module.exports = {
     createProduct,
     getProduct,
     getProducts,
     updateProduct,
     deleteProduct,
-    ratings
+    ratings,
+    uploadImagesProduct
 }

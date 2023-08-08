@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler')
 
 const createCoupon = asyncHandler(async(req, res) => {
     const {name, discount, expired} = req.body
-    if ( !name || !discount || expired) throw new Error('Missing inputs')
+    if ( !name || !discount || !expired) throw new Error('Missing inputs')
     const response = await Coupon.create({
         ...req.body,
         expired: Date.now() + +expired * 24 * 60 * 60 * 1000

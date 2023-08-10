@@ -118,8 +118,6 @@ const uploadImageBlog = asyncHandler(async(req, res) => {
     })
 })
 
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGMwYTM1MzFhYWY5MjhiMDZiNWVmYmMiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2OTEyMTQzMDksImV4cCI6MTY5MTM4NzEwOX0.t7SgNqsVdrAsu9D9R3hk8w83PlVAyDQby5JhjVWUtSQ
-
 module.exports = {
     createNewBlog,
     updateBlog,

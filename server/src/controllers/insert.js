@@ -23,7 +23,8 @@ const fn = async (product) => {
 
 const fn2 = async (cate) => {
     await ProductCategory.create({
-        title: cate?.cate
+        title: cate?.cate,
+        brand: cate?.brand
     })
 }
 
@@ -39,16 +40,7 @@ const insertCategory = asyncHandler(async(req, res) => {
     return res.json('OK')
 })
 
-// const insertBrand = asyncHandler(async(req, res) => {
-//     const response = await Brand.create(req.body)
-//     return res.json({
-//         success: response ? true : false,
-//         createdBrand: response ? response : 'Cannot create new Brand'
-//     })
-// })
-
 module.exports = {
-    // insertBrand,
     insertProduct,
     insertCategory
 }

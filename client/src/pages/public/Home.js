@@ -1,7 +1,8 @@
 import React from 'react'
-import { Sidebar, Banner } from '../../components'
+import { Sidebar, Banner, BestSeller } from '../../components'
 
 const Home = () => {
+
   return (
     <div className='w-main flex px-5' >
       <div className='w-[25%] flex-col flex-auto gap-5' >
@@ -10,7 +11,7 @@ const Home = () => {
       </div>
       <div className='w-[75%] flex-col flex-auto gap-5' >
         <Banner />
-        <span>Best seller</span>
+        <BestSeller />
       </div>
     </div>
   )

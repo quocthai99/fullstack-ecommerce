@@ -5,7 +5,7 @@ import {navigation} from '../ultils/contants'
 
 const Navigation = () => {
   return (
-    <div className='w-main h-[48px] py-2 text-sm flex items-center border'>
+    <div className='w-main h-[48px] py-2 border-y mb-8 text-sm flex items-center'>
       {navigation.map(el => (
         <NavLink key={el.id} to={el.path} className={({isActive}) =>  isActive ? 'pr-12 text-main' : 'pr-12 hover:text-main '} >
           {el.value}

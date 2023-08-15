@@ -20,5 +20,7 @@ module.exports = {
       main: ['Poppins', 'sans-serif']
     }
   },
-  plugins: [],
+  plugins: [
+    "@tailwindcss/line-clamp"
+  ],
 }

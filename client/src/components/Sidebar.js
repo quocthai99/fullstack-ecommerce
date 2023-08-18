@@ -7,7 +7,7 @@ const Sidebar = () => {
   const { categories } = useSelector(state => state.app)  
 
   return (
-    <div className='flex flex-col' >
+    <div className='flex flex-col border' >
       {categories.map(el => (
         <NavLink
           key={createSlug(el.title)}

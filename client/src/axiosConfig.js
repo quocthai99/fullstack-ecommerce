@@ -9,6 +9,10 @@ const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
     // Do something before request is sent
+    let token = window.localStorage.getItem('persist:shop/user') && JSON.parse(window.localStorage.getItem('persist:shop/user'))?.token.slice(1, -1)
+    config.headers = {
+        authorization: token ? `Bearer ${token}` : null
+    }
     return config;
 }, function (error) {
     // Do something with request error

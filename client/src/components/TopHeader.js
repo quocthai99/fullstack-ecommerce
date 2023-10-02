@@ -11,11 +11,11 @@ const { AiOutlineLogout } = icons
 const TopHeader = () => {
   const dispatch = useDispatch()
   const {isLoggedIn, current} = useSelector(state => state.user)
-  console.log(current)
   useEffect(() => {
     if ( isLoggedIn ) {
       dispatch(getCurrent())
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn])
 
   return (

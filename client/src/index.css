@@ -34,3 +34,40 @@ button.slick-prev::before {
     justify-content: center;
     align-items: center;
 }
+
+
+.image-slider button.slick-next {
+    right: 45px;
+    z-index: 10;
+}
+.image-slider button.slick-prev {
+    left: 20px;
+    z-index: 10;
+}
+
+.image-slider button.slick-next::before {
+    color: red;
+    content: '\203A';
+    background-color: #ffd3d3;
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image-slider button.slick-prev::before {
+    color: red;
+    content: '\2039';
+    background-color: #ffd3d3;
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-slider .slick-prev, .image-slider .slick-next {
+    height: 40px;
+}

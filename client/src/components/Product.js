@@ -5,7 +5,6 @@ import newL from '../assets/new.png'
 import {SelectOption} from './' 
 import icons from '../ultils/icons'
 import { Link } from 'react-router-dom'
-import path from '../ultils/path'
 
 const { AiFillEye, AiOutlineMenu, BsFillSuitHeartFill } = icons
 
@@ -16,7 +15,7 @@ const Product = ({productData, isNew}) => {
   return (
     <div className='w-full text-base px-[10px]' >
         <Link
-            to={`/${path.DETAIL_PRODUCT}/${productData._id}/${productData?.slug}`} 
+            to={`/${productData?.category.toLowerCase()}/${productData._id}/${productData?.slug}`} 
             className='w-full border p-[15px] flex flex-col items-center'
             onMouseEnter={e => {
                 e.stopPropagation()

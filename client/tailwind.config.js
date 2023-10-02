@@ -5,6 +5,9 @@ module.exports = {
     "./public/index.html"
   ],
   theme: {
+    listStyleType: {
+      square: 'square',
+    },
     extend: {
       width: {
         main: '1220px'

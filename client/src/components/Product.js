@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 
 const { AiFillEye, AiOutlineMenu, BsFillSuitHeartFill } = icons
 
-const Product = ({productData, isNew}) => {
+const Product = ({productData, isNew, normal}) => {
     const [isShowOption, setIsShowOption] = useState(false)
 
 
@@ -37,11 +37,11 @@ const Product = ({productData, isNew}) => {
                     alt='product'
                     className='w-[243px] h-[243px] object-cover'
                 />
-                <img
+                {!normal && <img
                     src={isNew ? newL : trending}
                     alt='label'
                     className='absolute top-0 right-0 w-[100px] h-[35px] object-cover'
-                />
+                />}
             </div>
             <div className='flex flex-col mt-[15px] items-start gap-1 w-full' >
                 <span className='flex h-4' >{renderStartFromNumber(productData?.totalRatings)}</span>

@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { apiGetProduct } from '../../apis';
-import { Breadcrumb, Button, SelectQuantity } from '../../components';
+import { apiGetProduct, apiGetProducts } from '../../apis';
+import { Breadcrumb, Button, SelectQuantity, ProductExtraInfoItem, ProductInformation, CustomSlider } from '../../components';
 import Slider from 'react-slick';
 import ReactImageMagnify from 'react-image-magnify';
 import { formatMoney, formatPrice, renderStartFromNumber } from '../../ultils/helpers';
+import { productExtraInfomation } from '../../ultils/contants';
 
 const settings = {
     dots: false,
@@ -15,18 +16,31 @@ const settings = {
 };
 
 const DetailProduct = () => {
-    const { pid } = useParams();
+    const { pid, category } = useParams();
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1)
+    const [relatedProducts, setRelatedProducts] = useState(null)
 
+    const fetchProducts = async () => {
+        const response = await apiGetProducts({category});
+        if (response.success) {
+            setRelatedProducts(response.products);
+        }
+    };
+    const fetchProduct = async () => {
+        const response = await apiGetProduct(pid);
+        if (response.success) {
+            setProduct(response.productData);
+        }
+    };
+    
     useEffect(() => {
-        const fetchProduct = async () => {
-            const response = await apiGetProduct(pid);
-            if (response.success) {
-                setProduct(response.productData);
-            }
-        };
-        fetchProduct();
+        if (pid) {
+            fetchProducts()
+            fetchProduct();
+        }
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pid]);
 
     const handleQuantity = useCallback((number) => {
@@ -53,9 +67,9 @@ const DetailProduct = () => {
                 </div>
             </div>
             <div className="w-main mt-4 flex gap-4 ">
-                <div className="flex-4 flex flex-col gap-4">
+                <div className="flex-4 flex flex-col gap-4 ">
                     <div className='w-[458px] m-auto' >
-                        <div className='w-full border' >
+                        <div className='w-full border ' >
                             <ReactImageMagnify {...{
                                 smallImage: {
                                     alt: 'Wristwatch by Ted Baker London',
@@ -96,16 +110,30 @@ const DetailProduct = () => {
                             <li className='leading-6' key={el} >{el}</li>
                         ))}
                     </ul>
-                    <div>
-                        <SelectQuantity
-                            quantity={quantity}
-                            handleQuantity={handleQuantity}
-                            handleChangeQuantity={handleChangeQuantity}
-                        />
+                    <div className='flex flex-col gap-4 mt-4' >
+                        <div className='flex items-center gap-4' >
+                            <span>Quantity</span>
+                            <SelectQuantity
+                                quantity={quantity}
+                                handleQuantity={handleQuantity}
+                                handleChangeQuantity={handleChangeQuantity}
+                            />
+                        </div>
                         <Button name="Add to cart" fw />
                     </div>
                 </div>
-                <div className="flex-2">info</div>
+                <div className="flex-2">
+                    {productExtraInfomation.map(el => (
+                        <ProductExtraInfoItem key={el.id} icon={el.icon} title={el.title} sub={el.sub} />
+                    ))}
+                </div>
+            </div>
+            <div>
+                <ProductInformation />
+            </div>
+            <div>
+                <h3 className="text-[20px] font-semibold py-[15px] border-b-2 border-main ">OTHER CUSTOMERS ALSO BUY:</h3>
+                <CustomSlider products={relatedProducts} normal />
             </div>
         </div>
     );

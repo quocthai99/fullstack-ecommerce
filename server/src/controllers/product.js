@@ -24,18 +24,27 @@ const getProduct = asyncHandler(async(req, res) => {
 
 const getProducts = asyncHandler(async(req, res) => {
     const queries = { ...req.query }
+    console.log(queries)
+    console.log(req.query)
 
     const excludeFields = ['limit', 'sort', 'page', 'fields']
     excludeFields.forEach(el => delete queries[el])
-
     let queryString = JSON.stringify(queries)
+
     queryString = queryString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`) 
-    const formatedQueries = JSON.parse(queryString)
+    const restQueries = JSON.parse(queryString)
 
-    if (queries?.title) formatedQueries.title = {$regex: queries.title, $options: 'i'}
-    if (queries?.category) formatedQueries.category = {$regex: queries.category, $options: 'i'}
-    let queryCommand = Product.find(formatedQueries)
-
+    let formatedQueries = {}
+    if (queries?.title) restQueries.title = {$regex: queries.title, $options: 'i'}
+    if (queries?.category) restQueries.category = {$regex: queries.category, $options: 'i'}
+    if (queries?.color) {
+        delete restQueries.color
+        const colorQuery = queries.color.split(',').map(el => ({ color: { $regex: el , $options: 'i' } }))
+        formatedQueries = { $or: colorQuery }
+    }
+    const q = {...formatedQueries, ...restQueries}
+    let queryCommand = Product.find(q)
+    
     if(req.query.sort) {
         const sortBy = req.query.sort.split(',').join(' ')
         queryCommand = queryCommand.sort(sortBy)
@@ -53,7 +62,7 @@ const getProducts = asyncHandler(async(req, res) => {
 
     queryCommand.exec(async(err, response) => {
         if (err) throw new Error(err.message)
-        const counts = await Product.find(formatedQueries).countDocuments()
+        const counts = await Product.find(q).countDocuments()
         return res.status(200).json({
             success: response ? true : false,
             counts,

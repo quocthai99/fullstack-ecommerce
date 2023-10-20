@@ -91,3 +91,49 @@ export const productInfoTabs = [
         content: 'awdawdawdARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products'
     },
 ]
+
+export const colors = [
+    'black',
+    'red',
+    'yellow',
+    'pink',
+    'green'
+]
+
+export const sorts = [
+    {
+        id:  1,
+        text: 'Best selling',
+        value: '-sold'
+    },
+    {
+        id:  2,
+        text: 'Alphabetically, A-Z',
+        value: '-title'
+    },
+    {
+        id:  3,
+        text: 'Alphabetically, Z-A',
+        value: 'title'
+    },
+    {
+        id:  4,
+        text: 'Price, low to high',
+        value: '-price'
+    },
+    {
+        id:  5,
+        text: 'Price, high to low',
+        value: 'price'
+    },
+    {
+        id:  6,
+        text: 'Date, old to new',
+        value: '-createdAt'
+    },
+    {
+        id:  7,
+        text: 'Date, new to old',
+        value: 'createdAt'
+    },
+]

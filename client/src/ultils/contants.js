@@ -85,11 +85,6 @@ export const productInfoTabs = [
         name: 'PAYMENT',
         content: 'W-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products'
     },
-    {
-        id: 5,
-        name: 'CUSTOMER REVIEW',
-        content: 'awdawdawdARRANTIESLimited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products'
-    },
 ]
 
 export const colors = [
@@ -135,5 +130,28 @@ export const sorts = [
         id:  7,
         text: 'Date, new to old',
         value: 'createdAt'
+    },
+]
+
+export const VoteOptions = [
+    {
+        id: 1,
+        text: 'Terrible'
+    },
+    {
+        id: 2,
+        text: 'Bad'
+    },
+    {
+        id: 3,
+        text: 'Nomal'
+    },
+    {
+        id: 4,
+        text: 'Good'
+    },
+    {
+        id: 5,
+        text: 'Perfect'
     },
 ]

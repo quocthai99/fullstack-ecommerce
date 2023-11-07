@@ -12,8 +12,13 @@ const TopHeader = () => {
   const dispatch = useDispatch()
   const {isLoggedIn, current} = useSelector(state => state.user)
   useEffect(() => {
-    if ( isLoggedIn ) {
-      dispatch(getCurrent())
+    const timeOutId = setTimeout(() => {
+      if ( isLoggedIn ) {
+        dispatch(getCurrent())
+      }
+    }, 300)
+    return () => {
+      clearTimeout(timeOutId)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn])
